@@ -1,3 +1,4 @@
+import { Thought } from "@/interfaces/Thought";
 import { api } from "../api";
 import { CreateThoughtDTO } from "../models/dto/CreateThoughtDTO";
 
@@ -7,7 +8,7 @@ const getAllThoughts = async () => {
 
 const createThought = async (body: CreateThoughtDTO) => {
     try {
-        return await api.post("/thought", body);
+        return await api.post<Thought>("/thought", body);
     } catch (error) {
         console.error(error);
     }

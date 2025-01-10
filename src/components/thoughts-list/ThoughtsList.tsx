@@ -3,9 +3,12 @@ import { Thought } from "../../interfaces/Thought";
 import ThoughtCard from "../thought-card/ThoughtCard";
 import { getAllThoughts } from "../../services/thought/ThoughtService";
 
-const ThoughtsList = () => {
-    const [thoughts, setThoughts] = useState<Thought[]>();
+interface ThoughtsListProps {
+    thoughts: Thought[];
+    setThoughts: (thoughts: Thought[]) => void;
+}
 
+const ThoughtsList = ({ thoughts, setThoughts }: ThoughtsListProps) => {
     useEffect(() => {
         handleLoadAllThoughts();
     }, []);
@@ -13,6 +16,11 @@ const ThoughtsList = () => {
     const handleLoadAllThoughts = async () => {
         const response = await getAllThoughts();
         setThoughts(response.data);
+    };
+
+    const handleReloadThoughts = async (id: string) => {
+        const filterThoughts = thoughts?.filter((thought) => thought.id !== id);
+        setThoughts(filterThoughts);
     };
 
     // const mockThoughts = [
@@ -54,7 +62,11 @@ const ThoughtsList = () => {
         <section className="flex flex-col gap-2">
             {thoughts &&
                 thoughts.map((thought) => (
-                    <ThoughtCard key={thought.id} thought={thought} reloadThoughts={handleLoadAllThoughts} />
+                    <ThoughtCard
+                        key={thought.id}
+                        thought={thought}
+                        reloadThoughts={handleReloadThoughts}
+                    />
                 ))}
         </section>
     );

@@ -13,7 +13,7 @@ import AlertBox from "../alert-box/AlertBox";
 
 interface ThoughtCardProps {
     thought: Thought;
-    reloadThoughts: () => void;
+    reloadThoughts: (id: string) => void;
 }
 
 const ThoughtCard = ({ thought, reloadThoughts }: ThoughtCardProps) => {
@@ -27,7 +27,7 @@ const ThoughtCard = ({ thought, reloadThoughts }: ThoughtCardProps) => {
             toast({
                 description: "Thought deleted!",
             });
-            reloadThoughts();
+            reloadThoughts(thought.id);
         } else {
             toast({
                 variant: "destructive",
