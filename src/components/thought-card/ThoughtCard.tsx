@@ -8,6 +8,8 @@ import { BiShare } from "react-icons/bi";
 import { useToast } from "@/hooks/use-toast";
 import { deleteThought } from "@/services/thought/ThoughtService";
 import { ToastAction } from "../ui/toast";
+import { AlertDialog, AlertDialogTrigger } from "../ui/alert-dialog";
+import AlertBox from "../alert-box/AlertBox";
 
 interface ThoughtCardProps {
     thought: Thought;
@@ -65,13 +67,19 @@ const ThoughtCard = ({ thought, reloadThoughts }: ThoughtCardProps) => {
                             >
                                 <HiOutlinePencilAlt size={18} color="#e2e8f0" />
                             </button>
-                            <button
-                                className="bg-slate-800 w-7 h-7 flex items-center justify-center rounded-md"
-                                title="Delete"
-                                onClick={handleDeleteThought}
-                            >
-                                <CgTrashEmpty size={18} color="#e2e8f0" />
-                            </button>
+                            <AlertDialog>
+                                <AlertDialogTrigger
+                                    className="bg-slate-800 w-7 h-7 flex items-center justify-center rounded-md"
+                                    title="Delete"
+                                >
+                                    <CgTrashEmpty size={18} color="#e2e8f0" />
+                                </AlertDialogTrigger>
+                                <AlertBox
+                                    handleAction={handleDeleteThought}
+                                    title="Are you sure you want to delete this thought?"
+                                    description="Once deleted there is no turning back."
+                                />
+                            </AlertDialog>
                         </>
                     ) : (
                         <>
