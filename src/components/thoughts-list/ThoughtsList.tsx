@@ -18,9 +18,15 @@ const ThoughtsList = ({ thoughts, setThoughts }: ThoughtsListProps) => {
         setThoughts(response.data);
     };
 
-    const handleReloadThoughts = async (id: string) => {
-        const filterThoughts = thoughts?.filter((thought) => thought.id !== id);
-        setThoughts(filterThoughts);
+    const handleReloadThoughts = async (id: string, action: string) => {
+        if (action === "delete") {
+            const filterThoughts = thoughts?.filter(
+                (thought) => thought.id !== id
+            );
+            setThoughts(filterThoughts);
+        } else if (action === "update") {
+            handleLoadAllThoughts();
+        }
     };
 
     // const mockThoughts = [
