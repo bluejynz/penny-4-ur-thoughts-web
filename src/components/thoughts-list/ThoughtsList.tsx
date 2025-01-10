@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Thought } from "../../interfaces/Thought";
-import ThoughtCard from "../tought-card/ThoughtCard";
+import ThoughtCard from "../thought-card/ThoughtCard";
 import { getAllThoughts } from "../../services/thought/ThoughtService";
 
 const ThoughtsList = () => {
@@ -54,7 +54,7 @@ const ThoughtsList = () => {
         <section className="flex flex-col gap-2">
             {thoughts &&
                 thoughts.map((thought) => (
-                    <ThoughtCard key={thought.id} thought={thought} />
+                    <ThoughtCard key={thought.id} thought={thought} reloadThoughts={handleLoadAllThoughts} />
                 ))}
         </section>
     );

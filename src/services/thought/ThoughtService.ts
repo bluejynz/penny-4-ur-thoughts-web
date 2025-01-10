@@ -13,4 +13,12 @@ const createThought = async (body: CreateThoughtDTO) => {
     }
 };
 
-export { getAllThoughts, createThought };
+const deleteThought = async (id: string) => {
+    try {
+        return await api.delete(`/thought/id/${id}`);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+export { getAllThoughts, createThought, deleteThought };

@@ -5,13 +5,43 @@ import { HiOutlinePencilAlt } from "react-icons/hi";
 import { FaHeart, FaRegHeart, FaRegShareSquare } from "react-icons/fa";
 import { VscCommentDiscussion } from "react-icons/vsc";
 import { BiShare } from "react-icons/bi";
+import { useToast } from "@/hooks/use-toast";
+import { deleteThought } from "@/services/thought/ThoughtService";
+import { ToastAction } from "../ui/toast";
 
 interface ThoughtCardProps {
     thought: Thought;
+    reloadThoughts: () => void;
 }
 
-const ThoughtCard = ({ thought }: ThoughtCardProps) => {
+const ThoughtCard = ({ thought, reloadThoughts }: ThoughtCardProps) => {
+    const { toast } = useToast();
     const [user, setUser] = useState("Dany Falk"); //alterar para localstorage futuramente
+
+    const handleDeleteThought = async () => {
+        const response = await deleteThought(thought.id);
+
+        if (response && response.status === 200) {
+            toast({
+                description: "Thought deleted!",
+            });
+            reloadThoughts();
+        } else {
+            toast({
+                variant: "destructive",
+                title: "Uh oh! Something went wrong.",
+                description: "There was a problem with your request.",
+                action: (
+                    <ToastAction
+                        altText="Re-load Page"
+                        onClick={() => window.location.reload()}
+                    >
+                        Re-load Page
+                    </ToastAction>
+                ),
+            });
+        }
+    };
 
     return (
         <article className="w-full flex flex-col justify-between bg-slate-200 rounded-sm p-4 gap-2">
@@ -38,6 +68,7 @@ const ThoughtCard = ({ thought }: ThoughtCardProps) => {
                             <button
                                 className="bg-slate-800 w-7 h-7 flex items-center justify-center rounded-md"
                                 title="Delete"
+                                onClick={handleDeleteThought}
                             >
                                 <CgTrashEmpty size={18} color="#e2e8f0" />
                             </button>
@@ -50,6 +81,7 @@ const ThoughtCard = ({ thought }: ThoughtCardProps) => {
                             >
                                 <FaRegHeart size={18} color="#e2e8f0" />
                                 {/* <FaHeart size={18} color="#e2e8f0" /> */}
+                                {/* filled heart */}
                             </button>
                             <button
                                 className="bg-slate-800 w-7 h-7 flex items-center justify-center rounded-md"

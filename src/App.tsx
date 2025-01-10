@@ -1,5 +1,6 @@
 import ThoughtForm from "./components/thought-form/ThoughtForm";
 import ThoughtsList from "./components/thoughts-list/ThoughtsList";
+import { Toaster } from "./components/ui/toaster";
 
 function App() {
     return (
@@ -10,6 +11,7 @@ function App() {
                 </h1>
                 <ThoughtForm />
                 <ThoughtsList />
+                <Toaster />
             </main>
         </div>
     );
