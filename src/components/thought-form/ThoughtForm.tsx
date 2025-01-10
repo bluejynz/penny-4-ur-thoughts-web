@@ -23,6 +23,8 @@ const ThoughtForm = ({ thoughts, setThoughts }: ThoughtFormProps) => {
 
         if (response && response.data) {
             setThoughts([...thoughts, response.data]);
+            authorRef.current.value = "";
+            sayingRef.current.value = "";
         }
     };
 
