@@ -74,7 +74,7 @@ const ThoughtForm = ({ thoughts, setThoughts }: ThoughtFormProps) => {
                 />
             </div>
             <input
-                className="w-auto self-center py-2 px-6 rounded-md bg-green-400"
+                className="w-auto self-center py-2 px-6 rounded-md bg-green-400 cursor-pointer"
                 type="submit"
                 value="Publish Thought"
             />
