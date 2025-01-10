@@ -1,6 +1,8 @@
 import { useRef } from "react";
 import { createThought } from "../../services/thought/ThoughtService";
 import { Thought } from "@/interfaces/Thought";
+import { useToast } from "@/hooks/use-toast";
+import { ToastAction } from "../ui/toast";
 
 interface ThoughtFormProps {
     thoughts: Thought[];
@@ -8,6 +10,7 @@ interface ThoughtFormProps {
 }
 
 const ThoughtForm = ({ thoughts, setThoughts }: ThoughtFormProps) => {
+    const { toast } = useToast();
     const authorRef = useRef<HTMLInputElement>(null);
     const sayingRef = useRef<HTMLTextAreaElement>(null);
 
@@ -21,10 +24,27 @@ const ThoughtForm = ({ thoughts, setThoughts }: ThoughtFormProps) => {
             saying: sayingRef.current?.value,
         });
 
-        if (response && response.data) {
+        if (response && response.data && response.status === 201) {
             setThoughts([...thoughts, response.data]);
             authorRef.current.value = "";
             sayingRef.current.value = "";
+            toast({
+                description: "Thought created!",
+            });
+        } else {
+            toast({
+                variant: "destructive",
+                title: "Uh oh! Something went wrong.",
+                description: "There was a problem with your request.",
+                action: (
+                    <ToastAction
+                        altText="Re-load Page"
+                        onClick={() => window.location.reload()}
+                    >
+                        Re-load Page
+                    </ToastAction>
+                ),
+            });
         }
     };
 

@@ -24,10 +24,10 @@ const ThoughtCard = ({ thought, reloadThoughts }: ThoughtCardProps) => {
         const response = await deleteThought(thought.id);
 
         if (response && response.status === 200) {
+            reloadThoughts(thought.id);
             toast({
                 description: "Thought deleted!",
             });
-            reloadThoughts(thought.id);
         } else {
             toast({
                 variant: "destructive",
