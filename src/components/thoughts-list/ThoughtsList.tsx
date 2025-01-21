@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Thought } from "../../interfaces/Thought";
 import ThoughtCard from "../thought-card/ThoughtCard";
 import { getAllThoughts } from "../../services/thought/ThoughtService";

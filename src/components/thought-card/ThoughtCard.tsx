@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { Thought } from "../../interfaces/Thought";
-import { CgTrashEmpty } from "react-icons/cg";
 import { HiOutlinePencilAlt } from "react-icons/hi";
-import { FaHeart, FaRegHeart, FaRegShareSquare } from "react-icons/fa";
+import { FaRegHeart, FaRegShareSquare } from "react-icons/fa";
 import { VscCommentDiscussion } from "react-icons/vsc";
 import { BiShare } from "react-icons/bi";
 import { useToast } from "@/hooks/use-toast";
@@ -21,7 +20,7 @@ interface ThoughtCardProps {
 
 const ThoughtCard = ({ thought, reloadThoughts }: ThoughtCardProps) => {
     const { toast } = useToast();
-    const [user, setUser] = useState("Dany Falk"); //alterar para localstorage futuramente
+    const user = "Dany Falk"; //alterar para localstorage futuramente
     const [isEditing, setIsEditing] = useState(false);
 
     const handleDeleteThought = async () => {
