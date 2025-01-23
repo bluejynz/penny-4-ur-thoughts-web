@@ -1,11 +1,24 @@
 import { useState } from "react";
-import ThoughtForm from "./components/thought-form/ThoughtForm";
-import ThoughtsList from "./components/thoughts-list/ThoughtsList";
 import { Toaster } from "./components/ui/toaster";
-import { Thought } from "./interfaces/Thought";
+import {
+    Navigate,
+    Route,
+    BrowserRouter as Router,
+    Routes,
+} from "react-router-dom";
+import ThoughtPage from "./pages/ThoughtPage";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
-    const [thoughts, setThoughts] = useState<Thought[]>([]);
+    const [isAuth, setIsAuth] = useState<boolean>(
+        !!localStorage.getItem("authToken")
+    );
+
+    const ProtectedRoute: React.FC<{ children: React.ReactElement }> = ({
+        children,
+    }) => {
+        return isAuth ? children : <Navigate to="/login" />;
+    };
 
     return (
         <div className="w-full min-h-screen bg-slate-800 flex justify-center px-4">
@@ -13,9 +26,24 @@ function App() {
                 <h1 className="text-4xl text-center font-medium text-slate-200">
                     Penny For Your Thoughts
                 </h1>
-                <ThoughtForm thoughts={thoughts} setThoughts={setThoughts} />
-                <ThoughtsList thoughts={thoughts} setThoughts={setThoughts} />
+
                 <Toaster />
+                <Router basename="/penny-4-ur-thoughts-web">
+                    <Routes>
+                        <Route
+                            path="/login"
+                            element={<LoginPage setAuth={setIsAuth} />}
+                        />
+                        <Route
+                            path="/"
+                            element={
+                                <ProtectedRoute>
+                                    <ThoughtPage />
+                                </ProtectedRoute>
+                            }
+                        />
+                    </Routes>
+                </Router>
             </main>
         </div>
     );
